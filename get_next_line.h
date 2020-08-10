@@ -6,7 +6,7 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 12:34:54 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/08/10 12:48:08 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/08/10 15:55:02 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 int		get_next_line(int fd, char **line);
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s);
 #endif
