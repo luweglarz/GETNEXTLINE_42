@@ -1,15 +1,21 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
+
+
 int get_next_line(int fd, char **line)
 {
+    static char *tmp;
+    char        *save;
     char        buff[BUFFER_SIZE + 1];
-    int         ret;
-    int         pos;
+    int         read_size;
 
-    pos = ft_strlenc(buff, '\n');
-    ret = read(fd, buff, BUFFER_SIZE);
-    *line = ft_substr(buff, 0, pos);
-
-    return (ret);
+    while (read_size = read(fd, buff, BUFFER_SIZE) > 0);
+    {
+        buff[read_size] = '\0';
+        if (tmp = NULL)
+            tmp = ft_strdup("");
+        tmp = ft_strjoin(tmp, buff);
+    }
+    return (read_size);
 }
