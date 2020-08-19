@@ -6,7 +6,7 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 12:34:49 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/08/13 14:24:35 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/08/19 16:27:58 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-int		ft_strlenc(const char *str, char c)
+size_t	ft_strlenc(const char *str, char c)
 {
-	int		i;
+	size_t i;
 
 	i = 0;
 	while (str[i])
@@ -90,10 +90,14 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	unsigned int	i;
 	unsigned int	j;
 	char			*str;
+	int				size1;
+	int				size2;
 
+	size1 = ft_strlenc(s1, '\n');
+	size2 = ft_strlenc(s2, '\n');
 	i = 0;
 	j = 0;
-	if (!(str = malloc(sizeof(char *) * (ft_strlenc(s1, '\n') + ft_strlenc(s2, '\n') + 1))))
+	if (!(str = malloc(sizeof(char *) * size1 + size2+ 1)))
 		return (NULL);
 	while (s1[i])
 	{
