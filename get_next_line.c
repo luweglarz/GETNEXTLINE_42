@@ -6,43 +6,40 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 16:17:29 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/08/19 16:25:34 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/08/24 16:41:03 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char			*swap_tmp(char *tmp, int line_n)
+char			*swap_tmp(char *tmp, char *buff)
 {
-	int		tmp_size;
 	char	*swap;
 
-	tmp_size = ft_strlenc(tmp, '\0');
-	swap = ft_substr(tmp, line_n + 1, tmp_size);
+	swap = ft_strjoin(tmp, buff);
 	free(tmp);
-	tmp = NULL;
 	tmp = ft_strdup(swap);
 	free(swap);
-	swap = NULL;
+	
 	return (tmp);
 }
 
-int				read_line(char *tmp, int fd)
+
+int				read_line(char **tmp, int fd)
 {
 	char	buff[BUFFER_SIZE + 1];
 	int		read_size;
+	char	save;
 
-	while ((read_size = read(fd, buff, BUFFER_SIZE)) > 0)
-	{
-		buff[read_size] = '\0';
-		if (tmp == NULL)
-			tmp = ft_strdup("");
+	while ((read_size = read(fd, buff, BUFFER_SIZE)))
+	{	
 		if (read_size == -1)
 			return (-1);
-		tmp = ft_strjoin(tmp, buff);
-		if (read_size == 1)
-			return (1);
+		buff[read_size] = '\0';
+		*tmp = swap_tmp(*tmp, buff);
+		if (ft_strchr(buff, '\n'))
+			break ;
 	}
 	return (0);
 }
@@ -50,23 +47,18 @@ int				read_line(char *tmp, int fd)
 int				get_next_line(int fd, char **line)
 {
 	static char		*tmp;
+	char			save;
 	int				ret;
 	int				line_n;
 
-	ret = read_line(tmp, fd);
+	ret = read_line(&tmp, fd);
 	line_n = ft_strlenc(tmp, '\n');
-	if (ret == 1)
+	if (tmp)
 	{
-		if (line_n == 0)
-			*line = ft_strdup("");
-		else
-		{
+		if (ret != 0)
 			*line = ft_substr(tmp, 0, line_n);
-			tmp = swap_tmp(tmp, line_n);
-		}
-		return (1);
+		else
+			*line = ft_strdup(tmp);
 	}
-	else
-		*line = ft_strdup("");
 	return (ret);
 }

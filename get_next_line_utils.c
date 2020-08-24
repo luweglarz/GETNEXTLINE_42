@@ -6,13 +6,13 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 12:34:49 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/08/19 16:27:58 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/08/24 16:38:11 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_strdup(const char *s)
+#include <stdio.h>
+char	*ft_strdup(char *s)
 {
 	int		i;
 	int		size;
@@ -33,10 +33,10 @@ char	*ft_strdup(const char *s)
 	return (str);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, int len)
 {
 	char	*str;
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (start > ft_strlenc(s, '\0'))
@@ -53,7 +53,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
@@ -69,9 +69,9 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-size_t	ft_strlenc(const char *str, char c)
+int		ft_strlenc(char *str, char c)
 {
-	size_t i;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -85,7 +85,7 @@ size_t	ft_strlenc(const char *str, char c)
 	return(-1);
 }
 
-char		*ft_strjoin(char const *s1, char const *s2)
+char		*ft_strjoin(char *s1, char *s2)
 {
 	unsigned int	i;
 	unsigned int	j;
