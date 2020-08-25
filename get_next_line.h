@@ -6,7 +6,7 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 12:34:54 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/08/25 13:32:35 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/08/25 13:52:02 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define BUFFER_SIZE 32
-
 int		get_next_line(int fd, char **line);
 
-char	*ft_substr(char *s, unsigned int start, int len);
+char	*ft_substr(char *s, int start, int len);
 char	*ft_strdup(char *s);
 int		ft_strlenc(char *str, char c);
 char	*ft_strjoin(char *s1, char *s2);
