@@ -6,13 +6,13 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 12:34:49 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/08/24 16:38:11 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/08/25 13:37:18 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-char	*ft_strdup(char *s)
+
+char		*ft_strdup(char *s)
 {
 	int		i;
 	int		size;
@@ -33,10 +33,10 @@ char	*ft_strdup(char *s)
 	return (str);
 }
 
-char	*ft_substr(char *s, unsigned int start, int len)
+char		*ft_substr(char *s, unsigned int start, int len)
 {
 	char	*str;
-	int	i;
+	int		i;
 
 	i = 0;
 	if (start > ft_strlenc(s, '\0'))
@@ -53,23 +53,7 @@ char	*ft_substr(char *s, unsigned int start, int len)
 	return (str);
 }
 
-char	*ft_strchr(char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *)s + i);
-		i++;
-	}
-	if (s[i] == '\0' && c == '\0')
-		return ((char *)s + i);
-	return (NULL);
-}
-
-int		ft_strlenc(char *str, char c)
+int			ft_strlenc(char *str, char c)
 {
 	int i;
 
@@ -82,7 +66,7 @@ int		ft_strlenc(char *str, char c)
 	}
 	if (str[i] == c)
 		return (i);
-	return(-1);
+	return (-1);
 }
 
 char		*ft_strjoin(char *s1, char *s2)
@@ -90,14 +74,12 @@ char		*ft_strjoin(char *s1, char *s2)
 	unsigned int	i;
 	unsigned int	j;
 	char			*str;
-	int				size1;
-	int				size2;
+	int				size;
 
-	size1 = ft_strlenc(s1, '\n');
-	size2 = ft_strlenc(s2, '\n');
+	size = ft_strlenc(s1, '\0') + ft_strlenc(s2, '\0');
 	i = 0;
 	j = 0;
-	if (!(str = malloc(sizeof(char *) * size1 + size2+ 1)))
+	if (!(str = malloc(sizeof(char) * size1 + size2 + 1)))
 		return (NULL);
 	while (s1[i])
 	{
@@ -114,4 +96,18 @@ char		*ft_strjoin(char *s1, char *s2)
 	}
 	str[j] = '\0';
 	return (str);
+}
+
+void		ft_bzero(void *s, size_t n)
+{
+	char	*ptr;
+	size_t	i;
+
+	ptr = s;
+	i = 0;
+	while (i < n)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
 }
