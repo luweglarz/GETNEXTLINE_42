@@ -6,13 +6,13 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 16:17:29 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/09/01 15:10:16 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/09/01 15:18:22 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char			*joinnfree(char *tmp, char *buffer)
+char		*joinnfree(char *tmp, char *buffer)
 {
 	char			*tmp_buff;
 
@@ -31,7 +31,7 @@ char			*joinnfree(char *tmp, char *buffer)
 char		*savenfree(char *tmp, int line_n, int line_z)
 {
 	char	*save;
-	
+
 	save = ft_substr(tmp, line_n + 1, line_z);
 	free(tmp);
 	tmp = NULL;
@@ -61,7 +61,7 @@ int			read_line(char **tmp, int fd)
 	return (0);
 }
 
-int				free_error(int ret, char **tmp)
+int			free_error(int ret, char **tmp)
 {
 	if (ret <= 0 && tmp)
 	{
@@ -71,14 +71,14 @@ int				free_error(int ret, char **tmp)
 	return (ret);
 }
 
-int				get_next_line(int fd, char **line)
+int			get_next_line(int fd, char **line)
 {
 	static char		*tmp;
 	int				ret;
 	int				line_n;
 	int				line_z;
 
-	ret = 1 ;
+	ret = 1;
 	if (!tmp || ft_strlenc(tmp, '\n') == -1)
 	{
 		if (!tmp)
@@ -92,6 +92,6 @@ int				get_next_line(int fd, char **line)
 		*line = ft_substr(tmp, 0, line_n);
 	else
 		*line = ft_strdup(tmp);
-	tmp = savenfree(tmp, line_n,line_z);
+	tmp = savenfree(tmp, line_n, line_z);
 	return (free_error(ret, &tmp));
 }
