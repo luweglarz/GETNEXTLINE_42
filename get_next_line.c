@@ -6,7 +6,7 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 16:17:29 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/09/01 14:14:11 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/09/01 15:10:16 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,20 @@ char			*joinnfree(char *tmp, char *buffer)
 	return (tmp);
 }
 
-static int		read_line(char **tmp, int fd)
+char		*savenfree(char *tmp, int line_n, int line_z)
+{
+	char	*save;
+	
+	save = ft_substr(tmp, line_n + 1, line_z);
+	free(tmp);
+	tmp = NULL;
+	tmp = ft_strdup(save);
+	free(save);
+	save = NULL;
+	return (tmp);
+}
+
+int			read_line(char **tmp, int fd)
 {
 	char	buff[BUFFER_SIZE + 1];
 	int		read_size;
@@ -60,27 +73,25 @@ int				free_error(int ret, char **tmp)
 
 int				get_next_line(int fd, char **line)
 {
-	char			*save;
 	static char		*tmp;
 	int				ret;
 	int				line_n;
 	int				line_z;
 
-	if (!tmp)
-		tmp = ft_strdup("");
-	if ((ret = read_line(&tmp, fd)) == -1)
-		return (free_error(ret, &tmp));
+	ret = 1 ;
+	if (!tmp || ft_strlenc(tmp, '\n') == -1)
+	{
+		if (!tmp)
+			tmp = ft_strdup("");
+		if ((ret = read_line(&tmp, fd)) == -1)
+			return (free_error(ret, &tmp));
+	}
 	line_n = ft_strlenc(tmp, '\n');
 	line_z = ft_strlenc(tmp, '\0');
 	if (ret != 0)
 		*line = ft_substr(tmp, 0, line_n);
 	else
 		*line = ft_strdup(tmp);
-	save = ft_substr(tmp, line_n + 1, line_z);
-	free(tmp);
-	tmp = NULL;
-	tmp = ft_strdup(save);
-	free(save);
-	save = NULL;
+	tmp = savenfree(tmp, line_n,line_z);
 	return (free_error(ret, &tmp));
 }
