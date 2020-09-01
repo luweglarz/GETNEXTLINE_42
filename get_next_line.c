@@ -6,11 +6,27 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 16:17:29 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/08/25 15:09:14 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/09/01 14:14:11 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char			*joinnfree(char *tmp, char *buffer)
+{
+	char			*tmp_buff;
+
+	if (tmp)
+	{
+		tmp_buff = ft_strjoin(tmp, buffer);
+		free(tmp);
+		tmp = ft_strdup(tmp_buff);
+		free(tmp_buff);
+	}
+	else
+		tmp = ft_strdup(buffer);
+	return (tmp);
+}
 
 static int		read_line(char **tmp, int fd)
 {
@@ -23,13 +39,23 @@ static int		read_line(char **tmp, int fd)
 		if (read_size == -1)
 			return (-1);
 		buff[read_size] = '\0';
-		*tmp = ft_strjoin(*tmp, buff);
-		if (ft_strlenc(*tmp, '\n') && read_size == 0)
+		*tmp = joinnfree(*tmp, buff);
+		if (ft_strlenc(*tmp, '\n') == -1 && read_size == 0)
 			return (0);
 		if (ft_strlenc(*tmp, '\n') != -1)
 			return (1);
 	}
 	return (0);
+}
+
+int				free_error(int ret, char **tmp)
+{
+	if (ret <= 0 && tmp)
+	{
+		free(*tmp);
+		*tmp = NULL;
+	}
+	return (ret);
 }
 
 int				get_next_line(int fd, char **line)
@@ -42,7 +68,8 @@ int				get_next_line(int fd, char **line)
 
 	if (!tmp)
 		tmp = ft_strdup("");
-	ret = read_line(&tmp, fd);
+	if ((ret = read_line(&tmp, fd)) == -1)
+		return (free_error(ret, &tmp));
 	line_n = ft_strlenc(tmp, '\n');
 	line_z = ft_strlenc(tmp, '\0');
 	if (ret != 0)
@@ -55,5 +82,5 @@ int				get_next_line(int fd, char **line)
 	tmp = ft_strdup(save);
 	free(save);
 	save = NULL;
-	return (ret);
+	return (free_error(ret, &tmp));
 }
