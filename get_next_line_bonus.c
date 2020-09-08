@@ -6,7 +6,7 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 11:49:37 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/09/08 13:47:26 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/09/08 15:43:29 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ char		*savenfree(char *tmp, int line_n, int line_z)
 	return (tmp);
 }
 
+int			free_error(int ret, char **tmp)
+{
+	if (ret <= 0 && tmp)
+	{
+		free(*tmp);
+		*tmp = NULL;
+	}
+	return (ret);
+}
+
 int			read_line(char **tmp, int fd)
 {
 	char	buff[BUFFER_SIZE + 1];
@@ -64,16 +74,6 @@ int			read_line(char **tmp, int fd)
 			return (1);
 	}
 	return (0);
-}
-
-int			free_error(int ret, char **tmp)
-{
-	if (ret <= 0 && tmp)
-	{
-		free(*tmp);
-		*tmp = NULL;
-	}
-	return (ret);
 }
 
 int			get_next_line(int fd, char **line)
