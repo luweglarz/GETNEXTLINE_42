@@ -6,7 +6,7 @@
 /*   By: lweglarz <lweglarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 11:49:37 by lweglarz          #+#    #+#             */
-/*   Updated: 2020/09/08 11:49:38 by lweglarz         ###   ########.fr       */
+/*   Updated: 2020/09/08 13:47:26 by lweglarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ char		*joinnfree(char *tmp, char *buffer)
 	{
 		tmp_buff = ft_strjoin(tmp, buffer);
 		free(tmp);
+		tmp = NULL;
 		tmp = ft_strdup(tmp_buff);
 		free(tmp_buff);
+		tmp_buff = NULL;
 	}
 	else
 		tmp = ft_strdup(buffer);
@@ -32,12 +34,15 @@ char		*savenfree(char *tmp, int line_n, int line_z)
 {
 	char	*save;
 
-	save = ft_substr(tmp, line_n + 1, line_z);
-	free(tmp);
-	tmp = NULL;
-	tmp = ft_strdup(save);
-	free(save);
-	save = NULL;
+	if (tmp)
+	{
+		save = ft_substr(tmp, line_n + 1, line_z);
+		free(tmp);
+		tmp = NULL;
+		tmp = ft_strdup(save);
+		free(save);
+		save = NULL;
+	}
 	return (tmp);
 }
 
@@ -73,7 +78,7 @@ int			free_error(int ret, char **tmp)
 
 int			get_next_line(int fd, char **line)
 {
-	static char		*tmp[1024];
+	static char		*tmp[256];
 	int				ret;
 	int				line_n;
 	int				line_z;
